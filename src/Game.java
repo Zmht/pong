@@ -5,15 +5,19 @@ import java.awt.image.BufferedImage;
 public class Game extends Canvas implements Runnable{
     public static final int WIDTH = 1000;
     public static final int HEIGHT = 600;
-    static Paddle pad = new Paddle(100, 100, 50, 50);
-    static Ball ball = new Ball(400, 600, 30, 30);
-    Image i = null;
+    private final Paddle pad = new Paddle(100, 100, 50, 50);
+    private final Ball ball = new Ball(100, 100, 50, 50);
+    BufferStrategy bs;
+    Graphics2D g;
     Thread thread;
     boolean running;
 
     public Game(){
         thread = new Thread();
         new Window(WIDTH, HEIGHT, "Pong", this);
+        createBufferStrategy(2);
+        bs = this.getBufferStrategy();
+        addKeyListener(new Keyboard());
     }
 
     public void init(){
@@ -27,17 +31,17 @@ public class Game extends Canvas implements Runnable{
     }
 
     public void render() {
-        i = createImage(WIDTH, HEIGHT);
-        Graphics g = this.getGraphics();
+            try{
+                g = (Graphics2D) bs.getDrawGraphics();
+                g.setColor(Color.BLACK);
+                g.fillRect(0, 0, WIDTH, HEIGHT);
 
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, WIDTH, HEIGHT);
-
-        g.setColor(Color.RED);
-        g.fillOval(100, 100, 32, 32);
-
-        pad.render(g);
-        ball.render(g);
+                pad.render(g);
+                ball.render(g);
+            } finally {
+                g.dispose();
+            }
+            bs.show();
     }
 
     public static void main(String[] args) {
@@ -59,6 +63,7 @@ public class Game extends Canvas implements Runnable{
         double delta = 0;
         long timer = System.currentTimeMillis();
         int frames = 0;
+        init();
         while(running) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;

@@ -2,6 +2,7 @@ import java.awt.*;
 
 public abstract class Entity {
     protected int xPos, yPos;
+    protected int xVel, yVel;
     protected int width, height;
 
     public Entity(int x, int y, int width, int height){
@@ -11,21 +12,52 @@ public abstract class Entity {
         this.height = height;
     }
 
-
-    public void setYPos(int val){
-        yPos = val;
+    public int getxPos() {
+        return xPos;
     }
 
-    public void setXPos(int val){
-        xPos = val;
+    public void setxPos(int xPos) {
+        this.xPos = xPos;
     }
 
-    public int getYPos(){
+    public int getyPos() {
         return yPos;
     }
 
-    public int getXPos(){
-        return xPos;
+    public void setyPos(int yPos) {
+        this.yPos = yPos;
+    }
+
+    public int getxVel() {
+        return xVel;
+    }
+
+    public void setxVel(int xVel) {
+        this.xVel = xVel;
+    }
+
+    public int getyVel() {
+        return yVel;
+    }
+
+    public void setyVel(int yVel) {
+        this.yVel = yVel;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     /**
@@ -41,6 +73,8 @@ public abstract class Entity {
     /**
      * Is run once every frame. Should contain the code to draw the object to the screen. Please override
      */
-    public void render(Graphics g){}
+    public void render(Graphics2D g){}
+
+    public void getBound()
 
 }

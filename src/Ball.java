@@ -8,17 +8,20 @@ public class Ball extends Entity {
 
     @Override
     public void init() {
-
+        yVel = 5;
+        xVel = 3;
     }
 
     @Override
     public void update() {
+        xPos += xVel;
+        yPos += yVel;
 
     }
 
     @Override
-    public void render(Graphics g) {
-        g.setColor(Color.RED);
-        g.fillRect(xPos, yPos, 50, 50);
+    public void render(Graphics2D g) {
+        g.setColor(Color.WHITE);
+        g.fillOval(xPos, yPos, width, height);
     }
 }
