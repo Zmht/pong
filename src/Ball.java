@@ -1,6 +1,13 @@
+import java.awt.*;
+
 public class Ball extends Entity {
 
-    public Ball(){
+    public Ball(int x, int y, int w, int h){
+        super(x, y, w, h);
+    }
+
+    @Override
+    public void init() {
 
     }
 
@@ -10,7 +17,8 @@ public class Ball extends Entity {
     }
 
     @Override
-    public void render() {
-
+    public void render(Graphics g) {
+        g.setColor(Color.RED);
+        g.fillRect(xPos, yPos, 50, 50);
     }
 }
