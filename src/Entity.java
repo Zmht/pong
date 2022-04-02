@@ -1,3 +1,5 @@
+import javafx.geometry.Rectangle2D;
+
 import java.awt.*;
 
 public abstract class Entity {
@@ -75,6 +77,8 @@ public abstract class Entity {
      */
     public void render(Graphics2D g){}
 
-    public void getBound()
+    public Rectangle2D getBound() {
+        return new Rectangle2D(xPos, yPos, width, height);
+    }
 
 }

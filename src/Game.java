@@ -5,16 +5,18 @@ import java.awt.image.BufferedImage;
 public class Game extends Canvas implements Runnable{
     public static final int WIDTH = 1000;
     public static final int HEIGHT = 600;
-    private final Paddle pad = new Paddle(100, 100, 50, 50);
-    private final Ball ball = new Ball(100, 100, 50, 50);
+    public static final Paddle pad = new Paddle(900, 255, 20, 90);
+    public static final Enemy enemy = new Enemy(100, 255, 20, 90);
+    public static final Ball ball = new Ball(500, 300, 50, 50);
+    public static final Menu menu = new Menu();
     BufferStrategy bs;
     Graphics2D g;
     Thread thread;
-    boolean running;
+    public static boolean running;
 
     public Game(){
         thread = new Thread();
-        new Window(WIDTH, HEIGHT, "Pong", this);
+        new Window(WIDTH, HEIGHT, "Pong", this, menu);
         createBufferStrategy(2);
         bs = this.getBufferStrategy();
         addKeyListener(new Keyboard());
@@ -23,11 +25,13 @@ public class Game extends Canvas implements Runnable{
     public void init(){
         pad.init();
         ball.init();
+        enemy.init();
     }
 
     public void update(){
         pad.update();
         ball.update();
+        enemy.update();
     }
 
     public void render() {
@@ -38,6 +42,7 @@ public class Game extends Canvas implements Runnable{
 
                 pad.render(g);
                 ball.render(g);
+                enemy.render(g);
             } finally {
                 g.dispose();
             }
@@ -49,10 +54,12 @@ public class Game extends Canvas implements Runnable{
     }
 
     public synchronized void start() {
+        new Menu();
         thread = new Thread(this);
         thread.start();
         running = true;
     }
+
 
     @Override
     public void run() {
